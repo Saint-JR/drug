@@ -2,19 +2,45 @@
     <div style="min-height: 100%;"> 
         <!-- <div class="background"></div> -->
         <div style="position: relative;">
-            <img src="../static/pic3(1).png" style="width: 100%;height: auto;">
+            <img src="../static/pic3.png" style="width: 100%;height: auto;">
             <div style="height: 99%;width: 100%;position: absolute;top: 0;background-color: rgba(0, 0, 0, 0.4);"></div>
             <div class="slogan" :style="{top:sloganTop,opacity:sloganOpa}">
-                <div style="display: flex;"><p>查询或提交</p><p style="color: rgb(240, 178, 9);">不良反应</p></div>
-                <div style="font-size: 40px;font-weight: 400;letter-spacing: 1px;">我们专注于药品安全</div>
+                <div style="display: flex;"><p>不良反应</p><p style="color: rgb(240, 178, 9);">图表</p></div>
+                <div style="font-size: 40px;font-weight: 400;letter-spacing: 1px;">可视化不良反应程度</div>
         
             </div>
         </div>
 
-        <div ref="main" style="width: 100%;height: 800px;position: relative;top: 80px;border: 2px solid red;">
-
+        <div class="content">
+            <div style="display: flex;justify-content: center;">
+                <p>在这里查看所有登记的不良反应</p><p style="color: rgb(240, 178, 9);">可视化图表</p>
+                <!-- <p>，或者提交您在药物使用说明书上未发现的</p><p style="color: rgb(240, 178, 9);">不良反应</p>  -->
+            </div>
+            <div style="display: flex;justify-content: center;font-size: 20px;margin-top: 10px;color: rgba(0, 0, 0, 0.4);">*记录不良反应后我们将会第一时间登记</div>
         </div>
-        <div style="position: relative;bottom: 5%;" @click="change">Change</div>
+
+        <div class="title">不良反应症状<p style="color: rgb(240, 178, 9);">词云</p></div>
+        <div ref="wordCloud" style="width: 100%;height: 800px;position: relative;top: 20px;display: flex;justify-content: center;align-items: center;">
+            <rotate-loader color="rgb(240, 178, 9)"></rotate-loader>
+        </div>
+        <div style="display: flex;justify-content: center;width: 100%;">
+            <div style="display: flex;width: 70%;justify-content: space-around;align-items: center;">
+                <div class="title">男女性报告时间-年龄
+                    <p style="color: rgb(240, 178, 9);">散点图</p>
+                    <div style="position: absolute;border: 4px solid rgb(240, 178, 9);bottom: -10px;transition: width 5s linear;" 
+                    :style="{width:`${100-borderLength}%`,opacity:borderOpa}"></div>
+                </div>
+                <div class="title">男女性平均报告年龄
+                    <p style="color: rgb(240, 178, 9);">柱状图</p>
+                    <div style="position: absolute;border: 4px solid rgb(240, 178, 9);bottom: -10px;transition: width 5s linear;" 
+                    :style="{width:`${borderLength}%`,opacity:1-borderOpa}"></div>
+                </div>
+            </div>
+            
+        </div>
+        
+        <div ref="scatterBar" style="width: 100%;height: 800px;position: relative;top: 80px;"></div>
+        <!-- <div style="position: relative;bottom: 5%;" @click="change">Change</div> -->
         
     </div>
 </template>
@@ -22,28 +48,33 @@
 <script>
 import * as echarts from "echarts";
 import 'echarts-wordcloud';
+import RotateLoader from 'vue-spinner/src/RotateLoader.vue'
 import {getCurrentInstance, onUnmounted,reactive,toRefs} from 'vue'
 import {ref,onMounted} from 'vue'
 export default {
     name:'MedChart',
+    components:{
+        RotateLoader
+    },
     setup(){
         
         const currentInstance = getCurrentInstance()
         const {$http}= currentInstance.appContext.config.globalProperties
 
-        const main=ref()
+        const wordCloud=ref()
+        const scatterBar=ref()
         let slogan=reactive({
             top:'55%',
             opa:0
         })
         
-        let myChart;
+        // let myChart;
 
         function wordcloud(){
-            // let myChart=echarts.init(main.value)
-            myChart.clear()
+            let myChart=echarts.init(wordCloud.value)
+
             $http({
-                url:'http://120.24.194.69:88/data/list1/list?page=1&limit=500',
+                url:'http://localhost:3000/data/list1/list?page=1&limit=500',
             }).then((res)=>{
                 let data=res.data.page.list
 
@@ -79,11 +110,10 @@ export default {
                         name: '不良反应症状',
                         type: 'wordCloud',
                         gridSize: 5, // 字之间的间隔大小
-                        // sizeRange: [12, 50], // 最小字体和最大字体
                         sizeRange: [12, 100], // 最小字体和最大字体 必须写一个范围不能直接写sizeRange: 14，
                         rotationRange: [0,90], // 字体旋转角度的范围，这里水平
                         rotationStep:45,
-                        width:'80%',
+                        width:'90%',
                         height:'90%',
                         shape: 'smooth', // 形状
 
@@ -109,19 +139,22 @@ export default {
 
 
         let interval;
+        let borderLength=ref(0)
+        let borderOpa=ref(1)
 
         function scatter(){
-            myChart.clear()
-            // let myChart=echarts.init(main.value)
+
+            
+            let myChart=echarts.init(scatterBar.value)
             $http({
-                url:'http://120.24.194.69:88/data/data2/getFemaleData'
+                url:'http://localhost:3000/data/data2/getFemaleData'
             }).then((response)=>{
                 const femaleData=response.data.data.list
 
                 const averageFemale=response.data.data.avgAge
 
                 $http({
-                    url:'http://120.24.194.69:88/data/data2/getMaleData'
+                    url:'http://localhost:3000/data/data2/getMaleData'
                 }).then((res)=>{
                     console.log(res)
                     const maleData=res.data.data.list
@@ -151,9 +184,7 @@ export default {
                                     }
                                 },
                                 itemStyle:{
-                                    normal: {
-                                        color: '#A7D691',
-                                    }
+                                    color: '#A7D691',
                                 },
                                 data: femaleData
                             },
@@ -168,9 +199,7 @@ export default {
                                     }
                                 },
                                 itemStyle:{
-                                    normal: {
-                                        color: '#758AC8',
-                                    }
+                                    color: '#758AC8',
                                 },
                                 data: maleData
                             }
@@ -197,12 +226,11 @@ export default {
                                     }
                                 ],
                                 itemStyle: {
-                                    normal: {
-                                        // color: ['#A7D691','#758AC8']
-                                        color: function (params){
-                                            var colorList = ['#A7D691','#758AC8'];
-                                            return colorList[params.dataIndex];
-                                        }
+
+                                    // color: ['#A7D691','#758AC8']
+                                    color: function (params){
+                                        var colorList = ['#A7D691','#758AC8'];
+                                        return colorList[params.dataIndex];
                                     }
                                     
                                 },
@@ -218,12 +246,15 @@ export default {
                         ]
                     };
                     let currentOption = scatterOption;
+                    
                     interval=setInterval(function () {
                         currentOption = currentOption === scatterOption ? barOption : scatterOption;
                         myChart.setOption(currentOption, true);
+                        borderLength.value=borderLength.value==100?0:100
+                        borderOpa.value=borderOpa.value==1?0:1
                     }, 5000);
                     // myChart.setOption(currentOption, true);
-
+                    borderLength.value=100
                     option && myChart.setOption(option);
 
                     
@@ -236,21 +267,25 @@ export default {
         }
 
 
-        let bool=false
+        // let bool=false
 
-        function change(){
-            if(bool)
-                scatter()
-            else{
-                clearInterval(interval)
-                wordcloud()
-            } 
-            bool=!bool
-        }
+        // function change(){
+        //     if(bool)
+        //         scatter()
+        //     else{
+        //         clearInterval(interval)
+        //         wordcloud()
+        //     } 
+        //     bool=!bool
+        // }
 
 
         onMounted(()=>{
-            myChart=echarts.init(main.value)
+            document.documentElement.scrollTop = 0;
+            // myChart=echarts.init(main.value)
+            setTimeout(()=>{
+                wordcloud()
+            },5000)
             scatter()
             setTimeout(()=>{
                 slogan.top='35%'
@@ -269,8 +304,12 @@ export default {
         return{
             sloganTop,
             sloganOpa,
-            main,
-            change
+            wordCloud,
+            scatterBar,
+            borderLength,
+            borderOpa
+            // main,
+            // change
         }
     }
 }
@@ -301,5 +340,27 @@ export default {
         /* display: flex;
         justify-content: center;
         align-items: center; */
+    }
+
+    .content{
+        
+        font-weight: 400;
+        font-size: 30px;
+        letter-spacing: 2px;
+        margin-top: 50px;
+
+        color: rgba(0, 0, 0, 0.61);
+    }
+
+    .title{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 30px;
+        color: rgba(0, 0, 0, 0.4);
+        font-weight: 700;
+        margin-top: 100px;
+        position: relative;
+
     }
 </style>

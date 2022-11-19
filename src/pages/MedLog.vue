@@ -1,7 +1,7 @@
 <template>
     <div class="mainPage">
         <div style="position: relative;">
-            <img src="../static/pic3(1).png" style="width: 100%;height: auto;">
+            <img src="../static/pic2.png" style="width: 100%;height: auto;">
             <div style="height: 99%;width: 100%;position: absolute;top: 0;background-color: rgba(0, 0, 0, 0.4);"></div>
             <div class="slogan" :style="{top:sloganTop,opacity:sloganOpa}">
                 <div style="display: flex;"><p>查询或提交</p><p style="color: rgb(240, 178, 9);">不良反应</p></div>
@@ -51,30 +51,30 @@
                                     <div style="display: flex;justify-content: space-around;">
                                         <div style="display: flex;flex-direction: column;align-items: center;">
                                             <div class="title"><p style="border-bottom: 3px solid rgba(0, 0, 0, 0.4);">ROR值</p></div>
-                                            <div class="context">{{result.rorvalue}}</div>
+                                            <div class="context">{{result.rorvalue.toFixed(1)}}</div>
                                         </div>
                                         <div style="display: flex;flex-direction: column;align-items: center;">
                                             <div class="title"><p style="border-bottom: 3px solid rgba(0, 0, 0, 0.4);">上限</p></div>
-                                            <div class="context">{{result.rorupperlimit}}</div>
+                                            <div class="context">{{result.rorupperlimit.toFixed(1)}}</div>
                                         </div>
                                         <div style="display: flex;flex-direction: column;align-items: center;">
                                             <div class="title"><p style="border-bottom: 3px solid rgba(0, 0, 0, 0.4);">下限</p></div>
-                                            <div class="context">{{result.rorlowerlimit}}</div>
+                                            <div class="context">{{result.rorlowerlimit.toFixed(1)}}</div>
                                         </div>
                                     </div>
                                     
                                     <div style="display: flex;justify-content: space-around;">
                                         <div style="display: flex;flex-direction: column;align-items: center;">
                                             <div class="title"><p style="border-bottom: 3px solid rgba(0, 0, 0, 0.4);">IC值</p></div>
-                                    <div class="context">{{result.icvalue}}</div>
+                                    <div class="context">{{result.icvalue.toFixed(1)}}</div>
                                         </div>
                                         <div style="display: flex;flex-direction: column;align-items: center;">
                                             <div class="title"><p style="border-bottom: 3px solid rgba(0, 0, 0, 0.4);">上限</p></div>
-                                            <div class="context">{{result.icupperlimit}}</div>
+                                            <div class="context">{{result.icupperlimit.toFixed(1)}}</div>
                                         </div>
                                         <div style="display: flex;flex-direction: column;align-items: center;">
                                             <div class="title"><p style="border-bottom: 3px solid rgba(0, 0, 0, 0.4);">下限</p></div>
-                                            <div class="context">{{result.iclowerlimit}}</div>
+                                            <div class="context">{{result.iclowerlimit.toFixed(1)}}</div>
                                         </div>
                                     </div>
                                     
@@ -237,6 +237,7 @@ export default {
         }
 
         onMounted(()=>{
+            document.documentElement.scrollTop = 0;
             setTimeout(()=>{
                 slogan.top='35%'
                 slogan.opa=1
@@ -416,13 +417,15 @@ export default {
     .result{
         width: 80%;
         height: 400px;
-        
+        transform-origin: center center -150px;
         font-size: 20px;
         color: rgba(0, 0, 0, 0.6);
         font-weight: 500;
         cursor: pointer;
         position: absolute;
         transition: transform 0.6s cubic-bezier(.47,-0.42,.53,1.4),scale 0.5s;
+        /* perspective: 1000px; */
+        transform-style:preserve-3d
     }
 
     .result:hover{
@@ -432,11 +435,11 @@ export default {
     }
 
     .rotate0{
-        transform: rotateX(0deg);
+        transform: rotateY(0deg);
     }
 
     .rotate180{
-        transform: rotateX(180deg);
+        transform: rotateY(-90deg);
     }
 
     .front{
@@ -461,7 +464,8 @@ export default {
         background-color: rgba(240, 240, 240, 1);
         border-top: 3px solid rgb(240, 178, 9);
         border-bottom: 3px solid rgb(240, 178, 9);
-        transform: rotateX(180deg);
+        transform: rotateY(90deg);
+        transform-origin: center center -150px;
     }
 
     .name{
