@@ -43,7 +43,7 @@ export default {
             // let myChart=echarts.init(main.value)
             myChart.clear()
             $http({
-                url:'http://localhost:88/data/list1/list?page=1&limit=500',
+                url:'http://120.24.194.69:88/data/list1/list?page=1&limit=500',
             }).then((res)=>{
                 let data=res.data.page.list
 
@@ -114,14 +114,14 @@ export default {
             myChart.clear()
             // let myChart=echarts.init(main.value)
             $http({
-                url:'http://localhost:88/data/data2/getFemaleData'
+                url:'http://120.24.194.69:88/data/data2/getFemaleData'
             }).then((response)=>{
                 const femaleData=response.data.data.list
 
                 const averageFemale=response.data.data.avgAge
 
                 $http({
-                    url:'http://localhost:88/data/data2/getMaleData'
+                    url:'http://120.24.194.69:88/data/data2/getMaleData'
                 }).then((res)=>{
                     console.log(res)
                     const maleData=res.data.data.list
