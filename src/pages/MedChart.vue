@@ -74,7 +74,7 @@ export default {
             let myChart=echarts.init(wordCloud.value)
 
             $http({
-                url:'http://localhost:3000/data/list1/list?page=1&limit=500',
+                url:'http://120.24.194.69:88/data/list1/list?page=1&limit=500',
             }).then((res)=>{
                 let data=res.data.page.list
 
@@ -147,14 +147,14 @@ export default {
             
             let myChart=echarts.init(scatterBar.value)
             $http({
-                url:'http://localhost:3000/data/data2/getFemaleData'
+                url:'http://120.24.194.69:88/data/data2/getFemaleData'
             }).then((response)=>{
                 const femaleData=response.data.data.list
 
                 const averageFemale=response.data.data.avgAge
 
                 $http({
-                    url:'http://localhost:3000/data/data2/getMaleData'
+                    url:'http://120.24.194.69:88/data/data2/getMaleData'
                 }).then((res)=>{
                     console.log(res)
                     const maleData=res.data.data.list
@@ -316,15 +316,6 @@ export default {
 </script>
 
 <style scoped>
-    /* .background{
-        position: absolute;
-        width: 100%;
-        height: 2000px;
-        filter: blur(10px);
-        overflow: hidden;
-        background-color: rgba(233, 182, 42, 0.219);;
-    } */
-
     p{
         margin: 0;
     }

@@ -34,7 +34,9 @@
                     <input placeholder="Password">
                 </div>
             </div>
-            
+            <div style="display: flex;justify-content: center;align-items: center;font-size: 40px;color: rgba(0,0,0,0.6);font-weight: 700;letter-spacing: 2px;">
+                <p style="padding-bottom: 10px;border-bottom: 5px solid rgb(240, 178, 9);cursor: pointer;">登录</p>
+            </div>
         </div>
     </div>
     
@@ -79,6 +81,10 @@ export default {
 </script>
 
 <style scoped>
+    p{
+        margin: 0;
+    }
+
     .navi{
         position: fixed;
         top: 50px;

@@ -11,9 +11,9 @@
             <div class="text2"><p>Good&nbsp;</p><p style="color:rgb(240, 178, 9)">Life</p></div>
             <div class="search">
                 
-                <input type="search"  :placeholder="placeholder" style="position: absolute;height: 70%;width: 70%;font-size: 45px;outline: none;border: none;letter-spacing: 1px;">
+                <input type="search" v-model="text"  :placeholder="placeholder" style="position: absolute;height: 70%;width: 70%;font-size: 45px;outline: none;border: none;letter-spacing: 1px;">
                 <div class="searchBall" :style="{right:serchright,transform:`scale(${scale})`}">
-                    <img src="../static/search.png" style="width: 60%;height: 60%;"/>
+                    <img src="../static/search.png" style="width: 60%;height: 60%;cursor: pointer;" @click="search"/>
                 </div>
                 
             </div>
@@ -27,6 +27,7 @@
 import { ref } from 'vue'
 import {  onMounted, watch } from '@vue/runtime-core'
 // import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 import {store} from '@/store/index'
     export default {
         name:'HomePage',
@@ -61,6 +62,18 @@ import {store} from '@/store/index'
 
             const closeLogin=()=>{
                 blur.value='0'
+            }
+
+
+            let text=ref('')
+            const router = useRouter()
+            const search=()=>{
+                router.push({ 
+                    path:'/medicine', 
+                    query: { 
+                        mainSearch:text.value
+                    }
+                })
             }
 
             onMounted(()=>{
@@ -119,6 +132,8 @@ import {store} from '@/store/index'
                 blur,
                 clickLogin,
                 closeLogin,
+                search,
+                text
             }
         }
     }

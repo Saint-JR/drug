@@ -26,7 +26,7 @@
             </div>
             
         </div>
-        <div class="query">
+        <div class="query" v-if="model==1">
             <div class="searchdiv">
                 <div class="search">
                     <input type="search"  placeholder="Omeprazole" v-model="input"
@@ -104,14 +104,46 @@
                 </div>
             </div>  
         </div>
+
+        <div class="submit" v-if="model==2">
+            <div style="display: flex;justify-content: center;">
+                <div style="width: 40%;">
+                    <div class="subTitle"><p>姓名</p></div>
+                    <div class="subIn">
+                        <input v-model="submit.userName" @blur="blur(0)"/>
+                        <div class="tip" v-if="submit.toolTip[0]==-1">*请输入有效姓名</div>
+                    </div>
+                    <div class="subTitle"><p>联系方式</p></div>
+                    <div class="subIn">
+                        <input v-model="submit.phone" @blur="blur(1)"/>
+                        <div class="tip" v-if="submit.toolTip[1]==-1">*请输入有效联系方式</div>
+                    </div>
+                    <div class="subTitle"><p>药物名称</p></div>
+                    <div class="subIn">
+                        <input v-model="submit.drugName" @blur="blur(2)"/>
+                        <div class="tip" v-if="submit.toolTip[2]==-1">*请输入药物名称</div>
+                    </div>
+                    <div class="subTitle"><p>不良反应症状</p></div>
+                    <div class="subIn">
+                        <input v-model="submit.illName" @blur="blur(3)"/>
+                        <div class="tip" v-if="submit.toolTip[3]==-1">*请输入不良反应症状</div>
+                    </div>
+                    <div class="submitButton"><p @click="clickSubmit">提交</p></div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
 import { onMounted,reactive,ref, toRefs,getCurrentInstance } from 'vue'
+import { useRoute } from 'vue-router'
 export default {
     name:'MegLog',
     setup(){
+        
+        const route=useRoute()
+        let mainSearch=route.query.mainSearch;
 
         const currentInstance = getCurrentInstance()
         const {$http}= currentInstance.appContext.config.globalProperties
@@ -132,34 +164,34 @@ export default {
         })
 
 
-        let model=1 //选择查询还是提交
+        let model=ref(1) //选择查询还是提交
 
         const clickChoice=(index)=>{
-            if(index==1&&model==2){
+            if(index==1&&model.value==2){
                 textRGB.rgb[0]='rgba(240, 178, 9,1)'
                 textRGB.rgb[1]='rgba(0, 0, 0, 0.4)'
                 borderLeft.value='0'
-                model=1
-            }else if(index==2&&model==1){
+                model.value=1
+            }else if(index==2&&model.value==1){
                 textRGB.rgb[0]='rgba(0, 0, 0, 0.4)'
                 textRGB.rgb[1]='rgba(240, 178, 9,1)'
                 borderLeft.value='50%'
-                model=2
+                model.value=2
             }
         }
 
         const msOver=(index)=>{
-            if(index==1&&model==2){
+            if(index==1&&model.value==2){
                 textRGB.rgb[0]='rgba(0, 0, 0, 0.8)'
-            }else if(index==2&&model==1){
+            }else if(index==2&&model.value==1){
                 textRGB.rgb[1]='rgba(0, 0, 0, 0.8)'
             }
         }
 
         const msLeave=(index)=>{
-            if(index==1&&model==2){
+            if(index==1&&model.value==2){
                 textRGB.rgb[0]='rgba(0, 0, 0, 0.4)'
-            }else if(index==2&&model==1){
+            }else if(index==2&&model.value==1){
                 textRGB.rgb[1]='rgba(0, 0, 0, 0.4)'
             }
         }
@@ -181,7 +213,7 @@ export default {
 
         const queryResult=(index)=>{
             $http({
-                url:`http://localhost:3000/data/data1/${isPartial?`search?name=${searchText}&`:'list?'}page=${index}&limit=16`
+                url:`http://120.24.194.69:88/data/data1/${isPartial?`search?name=${searchText}&`:'list?'}page=${index}&limit=16`
             }).then((res)=>{
                 queryList.pageArr=[] //清空
                 queryList.currentPage=index
@@ -236,13 +268,81 @@ export default {
             rotateBool.arr[4*(row-1)+column]=!bool
         }
 
+
+        // let name=ref('')
+        // let phone=ref('')
+        // let drugName=ref('')
+        // let illName=ref('')
+        let submit=reactive({
+            userName:'',
+            phone:'',
+            drugName:'',
+            illName:'',
+            toolTip:[0,0,0,0]
+        })
+
+        const blur=(index)=>{
+            if(index==0){
+                if(/^[\u4e00-\u9fa5]+$/.test(submit.userName))
+                    submit.toolTip[index]=0
+                else submit.toolTip[index]=-1
+            }else if(index==1){
+                if(/^1[34578]\d{9}$/.test(submit.phone))
+                    submit.toolTip[index]=0
+                else submit.toolTip[index]=-1
+            }else if(index==2){
+                if(submit.drugName!='')
+                    submit.toolTip[index]=0
+                else submit.toolTip[index]=-1
+            }else if(index==3){
+                if(submit.illName!='')
+                    submit.toolTip[index]=0
+                else submit.toolTip[index]=-1
+            }
+            
+        }
+
+        const clickSubmit=()=>{
+            blur(0)
+            blur(1)
+            blur(2)
+            blur(3)
+            for(let i in submit.toolTip){
+                if(submit.toolTip[i]==-1)
+                    return
+            }
+            $http({
+                method:'post',
+                url:'http://120.24.194.69:88/user/log/save',
+                data:JSON.stringify({
+                    username:submit.userName,
+                    userphonenumber:submit.phone,
+                    drugname:submit.drugName,
+                    creattime:new Date().getTime(),
+                    message:submit.illName
+                }),
+                headers: {
+                    'Content-Type': 'application/json',//设置请求头请求格式为JSON
+                }
+            }).then((res)=>{
+                console.log(res)
+            }).catch((err)=>{
+                console.log(err)
+            })
+        }
+
         onMounted(()=>{
             document.documentElement.scrollTop = 0;
             setTimeout(()=>{
                 slogan.top='35%'
                 slogan.opa=1
             },100)
-
+            if(mainSearch!=''&&mainSearch!=undefined){
+                console.log(1)
+                input.value=mainSearch
+                searchText=mainSearch
+                isPartial=true
+            }
             queryResult(1)
         })
 
@@ -252,6 +352,7 @@ export default {
             sloganTop,
             sloganOpa,
             textRGB,
+            model,
             clickChoice,
             msOver,
             msLeave,
@@ -262,7 +363,10 @@ export default {
             search,
             changePage,
             rotateCard,
-            rotateBool
+            rotateBool,
+            submit,
+            blur,
+            clickSubmit
         }
     }
 
@@ -423,7 +527,7 @@ export default {
         font-weight: 500;
         cursor: pointer;
         position: absolute;
-        transition: transform 0.6s cubic-bezier(.47,-0.42,.53,1.4),scale 0.5s;
+        transition: transform 0.6s ,scale 0.5s;
         /* perspective: 1000px; */
         transform-style:preserve-3d
     }
@@ -539,5 +643,77 @@ export default {
         background-color: rgb(240, 178, 9);
         color: white;
         cursor: pointer;
+    }
+
+    .submit{
+        margin-top: 80px;
+    }
+
+    .subTitle{
+        color: rgba(0, 0, 0, 0.4);
+        font-size: 30px;
+        letter-spacing: 2px;
+        font-weight: 700;
+        margin-bottom: 30px;
+        display: flex;
+    }
+
+    .subTitle>p{
+        padding-bottom: 5px;
+
+        border-bottom: 6px solid rgb(240, 178, 9);
+    }
+
+    .subIn{
+        width: 90%;
+        /* border: 2px solid red; */
+        display: flex;
+        align-items: center;
+        background-color: rgba(230, 230, 230,1);
+        border-radius: 10px;
+        height: 80px;
+        margin-bottom: 80px;
+        position: relative;
+    }
+
+    .submit input{
+        outline: none;
+        border: none;
+        font-size: 30px;
+        background-color: transparent;
+        margin-left: 20px;
+        width: 90%;
+        color: rgba(0, 0, 0, 0.8);
+    }
+
+    .tip{
+        position: absolute;
+        color: rgba(228, 44, 38, 0.801);
+        right: -250px;
+        font-size: 25px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        width: 200px;
+        white-space: nowrap;
+    }
+    .submitButton{
+        font-size: 40px;
+        color: rgba(0, 0, 0, 0.4);
+        font-weight: 700;
+        letter-spacing: 2px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 100px;
+    }
+
+    .submitButton>p{
+        cursor: pointer;
+        padding-bottom: 10px;
+        border-bottom: 5px solid rgb(240, 178, 9);
+    }
+
+    .submitButton>p:hover{
+        color: rgb(240, 178, 9);
     }
 </style>
