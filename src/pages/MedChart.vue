@@ -156,7 +156,6 @@ export default {
                 $http({
                     url:'http://120.24.194.69:88/data/data2/getMaleData'
                 }).then((res)=>{
-                    console.log(res)
                     const maleData=res.data.data.list
 
                     const averageMale=res.data.data.avgAge

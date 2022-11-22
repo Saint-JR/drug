@@ -139,7 +139,7 @@
 import { onMounted,reactive,ref, toRefs,getCurrentInstance } from 'vue'
 import { useRoute } from 'vue-router'
 export default {
-    name:'MegLog',
+    name:'MedLog',
     setup(){
         
         const route=useRoute()
@@ -325,7 +325,13 @@ export default {
                     'Content-Type': 'application/json',//设置请求头请求格式为JSON
                 }
             }).then((res)=>{
-                console.log(res)
+                if(res.data.code==0){
+                    document.documentElement.scrollTop = 0;
+                    setTimeout(()=>{
+                        alert("提交成功！")
+                    },500)
+                    clickChoice(1)
+                }
             }).catch((err)=>{
                 console.log(err)
             })

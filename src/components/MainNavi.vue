@@ -6,7 +6,7 @@
                 <router-link to="/" class="homebutton">Home</router-link>
                 <router-link to="/chart" class="chart">Chart</router-link>
                 <router-link to="/medicine" class="medicine">Medicine</router-link>
-                <div class="about">AboutUs</div>
+                <router-link to="/aboutus" class="about">AboutUs</router-link>
             </div>
 
         </div>
@@ -31,11 +31,11 @@
                     <input placeholder="Username">
                 </div>
                 <div>
-                    <input placeholder="Password">
+                    <input placeholder="Password" type="password">
                 </div>
             </div>
             <div style="display: flex;justify-content: center;align-items: center;font-size: 40px;color: rgba(0,0,0,0.6);font-weight: 700;letter-spacing: 2px;">
-                <p style="padding-bottom: 10px;border-bottom: 5px solid rgb(240, 178, 9);cursor: pointer;">登录</p>
+                <p style="padding-bottom: 10px;border-bottom: 5px solid rgb(240, 178, 9);cursor: pointer;" @click="closeLogin">登录</p>
             </div>
         </div>
     </div>
