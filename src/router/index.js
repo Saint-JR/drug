@@ -1,4 +1,4 @@
-import { createWebHistory, createRouter } from "vue-router";
+import { createWebHashHistory, createRouter } from "vue-router";
 import HomePage from "@/pages/HomePage.vue";
 import MedChart from '@/pages/MedChart.vue';
 import MedLog from '@/pages/MedLog.vue'
@@ -26,7 +26,7 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes,
 });
 
