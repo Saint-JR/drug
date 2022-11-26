@@ -179,16 +179,16 @@ import {store} from '@/store/index'
 
     .text1{
         position: relative;
-        top: 200px;
-        left: 200px;
+        top: 20%;
+        left: 10%;
         pointer-events: none;
         display: flex;
     }
 
     .text2{
         position: relative;
-        top: 200px;
-        left: 200px;
+        top: 20%;
+        left: 10%;
         margin-top: 50px;
         margin-left: 100px;
         pointer-events: none;
@@ -197,8 +197,8 @@ import {store} from '@/store/index'
 
     .search{
         position: relative;
-        top: 200px;
-        left: 200px;
+        top: 20%;
+        left: 10%;
         width: 600px;
         height: 80px;
         border-radius: 40px;

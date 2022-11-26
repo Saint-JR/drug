@@ -1,5 +1,5 @@
 <template>
-    <div class="mainPage">
+    <div class="mainPage" ref="main">
         <div style="position: relative;">
             <img src="../static/pic2.png" style="width: 100%;height: auto;">
             <div style="height: 99%;width: 100%;position: absolute;top: 0;background-color: rgba(0, 0, 0, 0.4);"></div>
@@ -43,8 +43,8 @@
                 <div class="page">
                     <div class="resultRow" v-for="index of queryList.rowNum" :key="index">
                         <div class="resultcard" v-for="(result,i) in queryList.list.slice(4*(index-1),4*(index))" :key="i">
-                            <div  @click="rotateCard(index,i)" :class="rotateBool.arr[4*(index-1)+i]?'result rotate180':'result rotate0'">
-                                <div class="back">
+                            <div  @click="rotateCard(index,i)" :class="rotateBool.arr[4*(index-1)+i]?'result rotate180':'result rotate0'" :style="{transformOrigin: `center center ${domWidth}px`}">
+                                <div class="back" :style="{transformOrigin: `center center ${domWidth}px`}">
                                     <div class="title" style="margin-top: 50px;"><p style="border-bottom: 3px solid rgba(0, 0, 0, 0.4);">药物总报告次数</p></div>
                                     <div class="context">{{result.total}}</div>
 
@@ -136,7 +136,7 @@
 </template>
 
 <script>
-import { onMounted,reactive,ref, toRefs,getCurrentInstance } from 'vue'
+import { onMounted,reactive,ref, toRefs,getCurrentInstance, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
 export default {
     name:'MedLog',
@@ -337,6 +337,8 @@ export default {
             })
         }
 
+        let main=ref()
+        let domWidth=ref(0);
         onMounted(()=>{
             document.documentElement.scrollTop = 0;
             setTimeout(()=>{
@@ -350,6 +352,9 @@ export default {
                 isPartial=true
             }
             queryResult(1)
+            nextTick(()=>{
+                domWidth.value=-main.value.clientWidth*0.8*0.25*0.4
+            })
         })
 
         const {top:sloganTop,opa:sloganOpa}=toRefs(slogan)
@@ -372,7 +377,9 @@ export default {
             rotateBool,
             submit,
             blur,
-            clickSubmit
+            clickSubmit,
+            main,
+            domWidth
         }
     }
 
@@ -527,7 +534,7 @@ export default {
     .result{
         width: 80%;
         height: 400px;
-        transform-origin: center center -150px;
+        /* transform-origin: center center -150px; */
         font-size: 20px;
         color: rgba(0, 0, 0, 0.6);
         font-weight: 500;
@@ -575,7 +582,7 @@ export default {
         border-top: 3px solid rgb(240, 178, 9);
         border-bottom: 3px solid rgb(240, 178, 9);
         transform: rotateY(90deg);
-        transform-origin: center center -150px;
+        /* transform-origin: center center -150px; */
     }
 
     .name{

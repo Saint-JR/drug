@@ -19,7 +19,7 @@
         </div>
     </div>
 
-    <div style="width: 100%;display: flex;justify-content: center;position: fixed;transition: all 1s;height: 680px;" :style="{top:loginTop}">
+    <div style="width: 100%;display: flex;justify-content: center;position: fixed;transition: top 1s;height: 680px;" :style="{top:login.top,opacity:login.opacity}">
         <div v-if="!isLogin" class="login">
             <img src="../static/close.png" @click="closeLogin">
             <div class="loginBrand">
@@ -44,23 +44,31 @@
 
 <script>
 import { onMounted } from '@vue/runtime-core'
-import { ref } from '@vue/reactivity'
+import { reactive, ref } from '@vue/reactivity'
 import {store} from '@/store/index'
 export default {
     name:'MainNavi',
     setup(){
         let isLogin=ref(store.isLogin)
         let left=ref('-100%')
-        let loginTop=ref('-100%')
+        let login=reactive({
+            top:'-100%',
+            opacity:0
+        })
 
         const clickLogin=()=>{
             store.clickLogin=true
-            loginTop.value='15%'
+            login.top='15%'
+            login.opacity=1
         }
 
         const closeLogin=()=>{
             store.clickLogin=false
-            loginTop.value='-100%'
+            login.top='-100%'
+            setTimeout(()=>{
+                login.opacity=0
+            },1200)
+            
         }
 
         onMounted(()=>{
@@ -74,7 +82,7 @@ export default {
             isLogin,
             clickLogin,
             closeLogin,
-            loginTop
+            login
         }
     }
 }
