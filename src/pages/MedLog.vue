@@ -107,27 +107,267 @@
 
         <div class="submit" v-if="model==2">
             <div style="display: flex;justify-content: center;">
-                <div style="width: 40%;">
-                    <div class="subTitle"><p>姓名</p></div>
-                    <div class="subIn">
-                        <input v-model="submit.userName" @blur="blur(0)"/>
-                        <div class="tip" v-if="submit.toolTip[0]==-1">*请输入有效姓名</div>
-                    </div>
-                    <div class="subTitle"><p>联系方式</p></div>
-                    <div class="subIn">
-                        <input v-model="submit.phone" @blur="blur(1)"/>
-                        <div class="tip" v-if="submit.toolTip[1]==-1">*请输入有效联系方式</div>
-                    </div>
-                    <div class="subTitle"><p>药物名称</p></div>
-                    <div class="subIn">
-                        <input v-model="submit.drugName" @blur="blur(2)"/>
-                        <div class="tip" v-if="submit.toolTip[2]==-1">*请输入药物名称</div>
-                    </div>
-                    <div class="subTitle"><p>不良反应症状</p></div>
-                    <div class="subIn">
-                        <input v-model="submit.illName" @blur="blur(3)"/>
-                        <div class="tip" v-if="submit.toolTip[3]==-1">*请输入不良反应症状</div>
-                    </div>
+                <div style="width: 90%;">
+                    <table border="1px solid #f00" cellpadding="0" cellspacing="0" style="width: 100%;border-spacing: 0;border-collapse: collapse;table-layout:fixed;">
+                        <tr>
+                            <td class="cell"  colspan="5">
+                                <div class="oneRow">
+                                    <div>姓&#12288;&#12288;名：</div>
+                                    <input type="text" class="inputText width200">
+                                </div>
+                            </td>
+                            <td class="cell" colspan="3">
+                                <div class="oneRow">
+                                    <div>性别：</div>
+                                    <form action="" class="oneRow">
+                                        男<input type="radio" name="sex" value="male" style="margin-left: 5px;">
+                                        女<input type="radio" name="sex" value="female" style="margin-left: 5px;">
+                                    </form>
+                                    
+                                </div>
+                            </td>
+                            <td class="cell" colspan="6">
+                                <div class="oneRow">
+                                    <div>出生日期：</div>
+                                    <input type="text"  class="inputText width50">
+                                    <div>年</div>
+                                    <input type="text" class="inputText width50">
+                                    <div>月</div>
+                                    <input type="text" class="inputText width50">
+                                    <div>日</div>
+                                </div>
+                            </td>
+                            <td class="cell" colspan="2">
+                                <div class="oneRow">
+                                    <div>民族：</div>
+                                    <input type="text" class="inputText width50">
+                                </div>
+                            </td>
+                            <td class="cell" colspan="3">
+                                <div class="oneRow">
+                                    <div>体重（kg）：</div>
+                                    <input type="text" class="inputText width50">
+                                </div>
+                            </td>
+                            <td class="cell" colspan="5">
+                                <div class="oneRow">
+                                    <div>联系方式：</div>
+                                    <input type="text" class="inputText width200">
+                                </div>
+                            </td>
+                            
+                        </tr>
+                        <tr>
+                            <td class="cell" colspan="8">
+                                <div class="subCell">
+                                    <div class="oneRow">
+                                        原患疾病：
+                                        <input type="text" class="inputText width200">
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="cell" colspan="8">
+                                <div class="subCell">
+                                    <div class="oneRow">
+                                        医&#12288;院&#12288;名&#12288;称：
+                                        <input type="text" class="inputText width200">
+                                    </div>
+                                    <div class="oneRow">
+                                        病历号&nbsp;/&nbsp;门诊号：
+                                        <input type="text" class="inputText width200">
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="cell" colspan="8">
+                                <div class="subCell">
+                                    <div class="oneRow">
+                                        <div>既往药品不良反应/事件：</div>
+                                        <form action="" class="oneRow">
+                                            有<input type="radio" name="past" value="yes" style="margin-left: 5px;">
+                                            无<input type="radio" name="past" value="no" style="margin-left: 5px;">
+                                            不详<input type="radio" name="past" value="notKnow" style="margin-left: 5px;">
+                                        </form>
+                                        
+                                    </div>
+                                    <div class="oneRow">
+                                        <div>家族药品不良反应/事件：</div>
+                                        <form action="" class="oneRow">
+                                            有<input type="radio" name="family" value="yes" style="margin-left: 5px;">
+                                            无<input type="radio" name="family" value="no" style="margin-left: 5px;">
+                                            不详<input type="radio" name="family" value="notKnow" style="margin-left: 5px;">
+                                        </form>
+                                        
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="cell" colspan="24">
+                                <div class="oneRow">
+                                    <div>相关重要信息：</div>
+                                    <form action="" class="oneRow">
+                                        吸烟史<input type="checkbox" name="info" value="smoke" style="margin-left: 5px;">
+                                        饮酒史<input type="checkbox" name="info" value="alcohol" style="margin-left: 5px;">
+                                        妊娠期<input type="checkbox" name="info" value="pregnant" style="margin-left: 5px;">
+                                        肝病史<input type="checkbox" name="info" value="liver" style="margin-left: 5px;">
+                                        肾病史<input type="checkbox" name="info" value="kidney" style="margin-left: 5px;">
+                                        过敏期<input type="checkbox" name="info" value="allergic" style="margin-left: 5px;">
+                                        其他<input type="checkbox" name="info" value="other" style="margin-left: 5px;">
+                                    </form>
+                                    
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="cell" colspan="2">药品</th>
+                            <th class="cell" colspan="2">批准文号</th>
+                            <th class="cell" colspan="2">商品名称</th>
+                            <th class="cell" colspan="3">通用名称</th>
+                            <th class="cell" colspan="3">生产厂家</th>
+                            <th class="cell" colspan="2">生产批号</th>
+                            <th class="cell" colspan="4">用法用量</th>
+                            <th class="cell" colspan="3">用药起止时间</th>
+                            <th class="cell" colspan="3">用药原因</th>
+                        </tr>
+                        <tr>
+                            <td class="cell" colspan="2" rowspan="3">怀疑药品</td>
+                            <td class="cell" style="text-align: center;" colspan="2"><input type="text" class="inputText width50"></td>
+                            <td class="cell" style="text-align: center;" colspan="2"><input type="text" class="inputText width50"></td>
+                            <td class="cell" style="text-align: center;" colspan="3"><input type="text" class="inputText width50"></td>
+                            <td class="cell" style="text-align: center;" colspan="3"><input type="text" class="inputText width50"></td>
+                            <td class="cell" style="text-align: center;" colspan="2"><input type="text" class="inputText width50"></td>
+                            <td class="cell" style="text-align: center;" colspan="4"><input type="text" class="inputText width50"></td>
+                            <td class="cell" style="text-align: center;" colspan="3"><input type="text" class="inputText width50"></td>
+                            <td class="cell" style="text-align: center;" colspan="3"><input type="text" class="inputText width50"></td>
+                        </tr>
+                        <tr>
+                            <td class="cell" style="text-align: center;" colspan="2"><input type="text" class="inputText width50"></td>
+                            <td class="cell" style="text-align: center;" colspan="2"><input type="text" class="inputText width50"></td>
+                            <td class="cell" style="text-align: center;" colspan="3"><input type="text" class="inputText width50"></td>
+                            <td class="cell" style="text-align: center;" colspan="3"><input type="text" class="inputText width50"></td>
+                            <td class="cell" style="text-align: center;" colspan="2"><input type="text" class="inputText width50"></td>
+                            <td class="cell" style="text-align: center;" colspan="4"><input type="text" class="inputText width50"></td>
+                            <td class="cell" style="text-align: center;" colspan="3"><input type="text" class="inputText width50"></td>
+                            <td class="cell" style="text-align: center;" colspan="3"><input type="text" class="inputText width50"></td>
+                        </tr>
+                        <tr>
+                            <td class="cell" style="text-align: center;" colspan="2"><input type="text" class="inputText width50"></td>
+                            <td class="cell" style="text-align: center;" colspan="2"><input type="text" class="inputText width50"></td>
+                            <td class="cell" style="text-align: center;" colspan="3"><input type="text" class="inputText width50"></td>
+                            <td class="cell" style="text-align: center;" colspan="3"><input type="text" class="inputText width50"></td>
+                            <td class="cell" style="text-align: center;" colspan="2"><input type="text" class="inputText width50"></td>
+                            <td class="cell" style="text-align: center;" colspan="4"><input type="text" class="inputText width50"></td>
+                            <td class="cell" style="text-align: center;" colspan="3"><input type="text" class="inputText width50"></td>
+                            <td class="cell" style="text-align: center;" colspan="3"><input type="text" class="inputText width50"></td>
+                        </tr>
+                        <tr>
+                            <td class="cell" colspan="2" rowspan="3">并用药品</td>
+                            <td class="cell" style="text-align: center;" colspan="2"><input type="text" class="inputText width50"></td>
+                            <td class="cell" style="text-align: center;" colspan="2"><input type="text" class="inputText width50"></td>
+                            <td class="cell" style="text-align: center;" colspan="3"><input type="text" class="inputText width50"></td>
+                            <td class="cell" style="text-align: center;" colspan="3"><input type="text" class="inputText width50"></td>
+                            <td class="cell" style="text-align: center;" colspan="2"><input type="text" class="inputText width50"></td>
+                            <td class="cell" style="text-align: center;" colspan="4"><input type="text" class="inputText width50"></td>
+                            <td class="cell" style="text-align: center;" colspan="3"><input type="text" class="inputText width50"></td>
+                            <td class="cell" style="text-align: center;" colspan="3"><input type="text" class="inputText width50"></td>
+                        </tr>
+                        <tr>
+                            <td class="cell" style="text-align: center;" colspan="2"><input type="text" class="inputText width50"></td>
+                            <td class="cell" style="text-align: center;" colspan="2"><input type="text" class="inputText width50"></td>
+                            <td class="cell" style="text-align: center;" colspan="3"><input type="text" class="inputText width50"></td>
+                            <td class="cell" style="text-align: center;" colspan="3"><input type="text" class="inputText width50"></td>
+                            <td class="cell" style="text-align: center;" colspan="2"><input type="text" class="inputText width50"></td>
+                            <td class="cell" style="text-align: center;" colspan="4"><input type="text" class="inputText width50"></td>
+                            <td class="cell" style="text-align: center;" colspan="3"><input type="text" class="inputText width50"></td>
+                            <td class="cell" style="text-align: center;" colspan="3"><input type="text" class="inputText width50"></td>
+                        </tr>
+                        <tr>
+                            <td class="cell" style="text-align: center;" colspan="2"><input type="text" class="inputText width50"></td>
+                            <td class="cell" style="text-align: center;" colspan="2"><input type="text" class="inputText width50"></td>
+                            <td class="cell" style="text-align: center;" colspan="3"><input type="text" class="inputText width50"></td>
+                            <td class="cell" style="text-align: center;" colspan="3"><input type="text" class="inputText width50"></td>
+                            <td class="cell" style="text-align: center;" colspan="2"><input type="text" class="inputText width50"></td>
+                            <td class="cell" style="text-align: center;" colspan="4"><input type="text" class="inputText width50"></td>
+                            <td class="cell" style="text-align: center;" colspan="3"><input type="text" class="inputText width50"></td>
+                            <td class="cell" style="text-align: center;" colspan="3"><input type="text" class="inputText width50"></td>
+                        </tr>
+                        <tr>
+                            <td class="cell" colspan="12">
+                                <div class="oneRow">
+                                    不良反应/事件名称：
+                                    <input type="text" class="inputText width200">
+                                </div>
+                            </td>
+                            <td class="cell" colspan="12">
+                                <div class="oneRow">
+                                    不良反应/事件发生时间：
+                                    <input type="text"  class="inputText width50">
+                                    <div>年</div>
+                                    <input type="text" class="inputText width50">
+                                    <div>月</div>
+                                    <input type="text" class="inputText width50">
+                                    <div>日</div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="cell" colspan="24">
+                                <div class="oneRow">
+                                    不良反应/事件过程描述（包括症状、体征、临床检验等）及处理情况（可附页）：
+                                    <input type="text" class="inputText width500">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="cell" colspan="24">
+                                <div class="subCell">
+                                    <div class="oneRow">
+                                        不良反应/事件的结果：
+                                        痊愈<input type="radio" name="result" value="cure" style="margin-left: 5px;">
+                                        好转<input type="radio" name="result" value="better" style="margin-left: 5px;">
+                                        未好转<input type="radio" name="result" value="notBetter" style="margin-left: 5px;">
+                                        不详<input type="radio" name="result" value="notKnow" style="margin-left: 5px;">
+                                        有后遗症<input type="radio" name="result" value="better" style="margin-left: 5px;">
+                                        <div style="margin-left: 10px;">表现：<input type="text" class="inputText width200"></div>
+                                    </div>
+                                    <div class="oneRow" style="margin-top: 10px;">
+                                        死亡<input type="radio" name="result" value="cure" style="margin-left: 5px;">
+                                        <div style="margin-left: 10px;">直接死因：<input type="text" class="inputText width200"></div>
+                                        <div style="margin-left: 10px;" class="oneRow">死亡时间：
+                                            <input type="text"  class="inputText width50">
+                                            <div>年</div>
+                                            <input type="text" class="inputText width50">
+                                            <div>月</div>
+                                            <input type="text" class="inputText width50">
+                                            <div>日</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="cell" colspan="24">
+                                <div class="subCell">
+                                    <div class="oneRow">
+                                        停药或减量后，反应/时间是否消失或减轻？
+                                        是<input type="radio" name="stop" value="yes" style="margin-left: 5px;">
+                                        否<input type="radio" name="stop" value="no" style="margin-left: 5px;">
+                                        不明<input type="radio" name="stop" value="notKnow" style="margin-left: 5px;">
+                                        未停药或未减量<input type="radio" name="stop" value="noStop" style="margin-left: 5px;">
+                                    </div>
+                                    <div class="oneRow" style="margin-top: 10px;">
+                                        再次使用可疑药品后是否再次出现同样反应/事件？
+                                        是<input type="radio" name="again" value="yes" style="margin-left: 5px;">
+                                        否<input type="radio" name="again" value="no" style="margin-left: 5px;">
+                                        不明<input type="radio" name="again" value="notKnow" style="margin-left: 5px;">
+                                        未再使用<input type="radio" name="again" value="noAgain" style="margin-left: 5px;">
+                                    </div>
+                                </div>
+                                
+                            </td>
+                        </tr>
+                    </table>
                     <div class="submitButton"><p @click="clickSubmit">提交</p></div>
                 </div>
             </div>
@@ -678,7 +918,7 @@ export default {
     }
 
     .subIn{
-        width: 90%;
+        width: 100%;
         /* border: 2px solid red; */
         display: flex;
         align-items: center;
@@ -689,7 +929,7 @@ export default {
         position: relative;
     }
 
-    .submit input{
+    /* .submit input{
         outline: none;
         border: none;
         font-size: 30px;
@@ -697,7 +937,7 @@ export default {
         margin-left: 20px;
         width: 90%;
         color: rgba(0, 0, 0, 0.8);
-    }
+    } */
 
     .tip{
         position: absolute;
@@ -718,6 +958,7 @@ export default {
         justify-content: center;
         align-items: center;
         margin-bottom: 100px;
+        margin-top: 20px;
     }
 
     .submitButton>p{
@@ -728,5 +969,42 @@ export default {
 
     .submitButton>p:hover{
         color: rgb(240, 178, 9);
+    }
+
+    .cell{
+        padding: 15px;
+    }
+
+    .subCell{
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+
+    .oneRow{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .width500{
+        width: 500px;
+    }
+
+    .width200{
+        width: 200px;
+    }
+
+    .width50{
+        width: 50px;
+    }
+
+    .inputText{
+        height: 100%;
+        border: 1px solid black;
+        margin-left: 5px;
+        margin-right: 5px;
+        border-style: none;
     }
 </style>
