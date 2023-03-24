@@ -7,8 +7,9 @@
 
         
         <div class="mon" :style="{top:top}">
-            <div class="text1"><p>Safe&nbsp;</p><p style="color:rgb(240, 178, 9)">Drug</p></div>
-            <div class="text2"><p>Good&nbsp;</p><p style="color:rgb(240, 178, 9)">Life</p></div>
+            <div class="text1"><p>药物</p><p style="color:rgb(240, 178, 9);margin-left: 50px;">安全</p></div>
+            <div class="text2"><p>关乎</p><p style="color:rgb(240, 178, 9);margin-left: 50px;">你我</p></div>
+            <img src="../static/logo.png" style="position: absolute;top: 25%;right: 15%;height: 400px;">
             <div class="search">
                 
                 <input type="search" v-model="text"  :placeholder="placeholder" style="position: absolute;height: 70%;width: 70%;font-size: 45px;outline: none;border: none;letter-spacing: 1px;">

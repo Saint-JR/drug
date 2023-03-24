@@ -3,10 +3,10 @@
         <div class="sma_mon" :style="{left:left}">
             <img src="../static/login.png" @click="clickLogin"/>
             <div>
-                <router-link to="/" class="homebutton">Home</router-link>
-                <router-link to="/chart" class="chart">Chart</router-link>
-                <router-link to="/medicine" class="medicine">Medicine</router-link>
-                <router-link to="/aboutus" class="about">AboutUs</router-link>
+                <router-link to="/" class="homebutton">主页</router-link>
+                <router-link to="/chart" class="chart">图表</router-link>
+                <router-link to="/medicine" class="medicine">药物</router-link>
+                <router-link to="/aboutus" class="about">关于我们</router-link>
             </div>
 
         </div>
